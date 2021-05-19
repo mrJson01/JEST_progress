@@ -29,7 +29,7 @@ not.toBeNull <br/>
 <br/>
 <br/>
 # Using JEST via command lines
-<br/>
+
 * jest (all tests in a folder) <br/>
     * pattern (my-test => my-test.js) <br/>
     * specified path to file <br/>
