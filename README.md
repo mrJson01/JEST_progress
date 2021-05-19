@@ -29,16 +29,16 @@ not.toBeNull <br/>
 <br/>
 <br/>
 # Using JEST via command lines
-<br/>
+
 * jest (all tests in a folder) <br/>
     * pattern (my-test => my-test.js) <br/>
     * specified path to file <br/>
     * !!! -o ,run test on changed files based on git <br/>
     * --findRelatedTests name(runs test that are related to specified name) <br/>
     * watch , runs jest -o by default <br/>
-<br/>
+
 # Testing Asynchronous code
-<br/>
+
 Jest needs to know when the code it is testing has completed.<br/>
 By default JEST test ends once it reach end of its execution.<br/>
 
@@ -64,7 +64,6 @@ module.exports = name;
 ```javascript
 export.name = name;
 ```
-<br/>
 ### Promises
 It is easier to handle the Promis beacause when Promise is rejected the test fail.<br/>
 ```javascript
