@@ -36,7 +36,7 @@ not.toBeNull <br/>
     * !!! -o ,run test on changed files based on git <br/>
     * --findRelatedTests name(runs test that are related to specified name) <br/>
     * watch , runs jest -o by default <br/>
-<br/>
+
 # Testing Asynchronous code
 
 Jest needs to know when the code it is testing has completed.<br/>
