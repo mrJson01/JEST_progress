@@ -38,7 +38,7 @@ not.toBeNull <br/>
     * watch , runs jest -o by default <br/>
 <br/>
 # Testing Asynchronous code
-<br/>
+
 Jest needs to know when the code it is testing has completed.<br/>
 By default JEST test ends once it reach end of its execution.<br/>
 
