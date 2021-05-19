@@ -199,3 +199,74 @@ Once describe blocks are colpeted JEST runs the tests in the correct order. <br/
 If the test is fail you can check if it will fail when it is the only test that is execute <br/>
 You can do it by **test.only()** <br/>
 If under this under this circumstance test does not fail it may means that other test interfering with it. <br/>
+
+# Mock Functions
+
+Mock functions allow you to test the links between code by erasing the actual implementation of a function, <br/>
+capturing calls to the function (and the parameters passed in those calls), <br/>
+capturing instances of constructor functions when instantiated with new, <br/>
+and allowing test-time configuration of return values. <br/>
+**module.export** does not work well with mocking callback function. <br/>
+
+### .mock property
+
+All mock function have **.mock** property that contains data about what function returned and tracks the value of **this** for each call. <br/>
+
+```javascript
+mockFunction.mock.calls.length;
+mockFunction.mock.calls[0][0];
+mockFunction.mock.results[0].value;
+mockFunction.mock.instances.length; //You can instance the mock function
+mockFUnction.mock.instances[0].name;
+```
+
+This is how to create instance of mock Function: <br/>
+
+```javascript
+
+const myMock = jest.fn();
+const a = new myMock();
+const b = {};
+const bound = myMock.bind(b);
+bound();
+
+```
+
+### Mock Implementations
+
+The **mock Implementation** method can replace the implementation of the function <br/>
+that is created in another module: 
+
+```javascript
+jest.mock('../foo');
+const foo = require('../foo');
+foo.mockImplementation(()=>42);
+foo(); // > 42
+```
+
+if the function returns different value each time you can use **.mockImplementationOnce. <br/>
+You can also define the default implementation by using **.fn()**. <br/>
+To name mock so it will be displayed as something other than **mock.fn()** <br/>
+use **mock.mockName('name')**. <br/>
+
+For methods that are typically chained and have to return **this** <br/>
+you can use **.mockReturnThis()** <br/>
+
+```javascript
+const mockObj = {
+    myMethod : jest.fn().mockReturnThis()
+};
+```
+
+### Custom Matchers
+Use with expect().
+* .toHaveBeenCalled() <br/>
+* .toHaveBeenCalledWith(arg1,arg2) <br/>
+* .toHaveBeenLastCalledWith(arg1,arg2) <br/>
+* .toMatchSnapshot() <br/>
+
+### Useful
+
+*.mockReturnValueOnce() <br/>
+* _array_.filter() ->filters given array (np. [1,2].filter()) <br/>
+
