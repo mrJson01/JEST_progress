@@ -64,7 +64,6 @@ module.exports = name;
 ```javascript
 export.name = name;
 ```
-<br/>
 ### Promises
 It is easier to handle the Promis beacause when Promise is rejected the test fail.<br/>
 ```javascript
