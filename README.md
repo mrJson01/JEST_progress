@@ -77,8 +77,9 @@ test('the data is peanut butter', () => {
 Remember to return the Promise otherwise the test will end before then() statement have a chance to be executed. <br/>
 If you expect the Promise to be rejected use catch() method. <br/>
 You can also use **resolves** and **rejects** as a Matcher. <br/>
+
 ### Async/Await
-<br/>
+
 ```javascript
 
 test('the data is peanut butter', async () => {
@@ -96,11 +97,106 @@ test('the fetch fails with an error', async () => {
 });
 
 ```
-<br/>
 ### Async/Await with resolves/rejects
-<br/>
+
 ```javascript
 test('the data is peanut butter',async()=>{
     await expect(fetchData()).resolves.toBe('peanut butter');
 });
 ```
+
+# Setup and Teardown
+
+You can set a code that will run **before** and **after** each of tests. <br/>
+Also you can set some function to execute on the beggining of the file or at the end of the file. <br/>
+
+```javascript
+beforeEach(()=>{
+    initializeCityDatabase() //or return initializeCityDatabase if function returns Promise so that how you handle it
+});
+
+afterAll(()=>{
+    clearCityDatabase();
+});
+
+```
+
+### Scoping
+
+By default **before** and **after** blocks apply to every test in a file but you can group them together by using **describe** block. <br/>
+
+```javascript
+
+beforeEach(()=>{
+    //do something 
+});
+
+describe('This setup will apply only to test within describe block',()=>{
+    beforeEach(()=>{
+        //do something
+    });
+});
+
+```
+
+Order of execution of **before** and **after** blocks. <br/>
+
+```javascript
+
+beforeAll(() => console.log('1 - beforeAll'));
+afterAll(() => console.log('1 - afterAll'));
+beforeEach(() => console.log('1 - beforeEach'));
+afterEach(() => console.log('1 - afterEach'));
+test('', () => console.log('1 - test'));
+describe('Scoped / Nested block', () => {
+  beforeAll(() => console.log('2 - beforeAll'));
+  afterAll(() => console.log('2 - afterAll'));
+  beforeEach(() => console.log('2 - beforeEach'));
+  afterEach(() => console.log('2 - afterEach'));
+  test('', () => console.log('2 - test'));
+});
+
+// 1 - beforeAll
+// 1 - beforeEach
+// 1 - test
+// 1 - afterEach
+// 2 - beforeAll
+// 1 - beforeEach
+// 2 - beforeEach
+// 2 - test
+// 2 - afterEach
+// 1 - afterEach
+// 2 - afterAll
+// 1 - afterAll
+beforeAll(() => console.log('1 - beforeAll'));
+afterAll(() => console.log('1 - afterAll'));
+beforeEach(() => console.log('1 - beforeEach'));
+afterEach(() => console.log('1 - afterEach'));
+test('', () => console.log('1 - test'));
+describe('Scoped / Nested block', () => {
+  beforeAll(() => console.log('2 - beforeAll'));
+  afterAll(() => console.log('2 - afterAll'));
+  beforeEach(() => console.log('2 - beforeEach'));
+  afterEach(() => console.log('2 - afterEach'));
+  test('', () => console.log('2 - test'));
+});
+
+// 1 - beforeAll
+// 1 - beforeEach
+// 1 - test
+// 1 - afterEach
+// 2 - beforeAll
+// 1 - beforeEach
+// 2 - beforeEach
+// 2 - test
+// 2 - afterEach
+// 1 - afterEach
+// 2 - afterAll
+// 1 - afterAll
+
+```
+JEST firstly execute all setups and describe blocks before doing a tests. <br/>
+Once describe blocks are colpeted JEST runs the tests in the correct order. <br/>
+If the test is fail you can check if it will fail when it is the only test that is execute <br/>
+You can do it by **test.only()** <br/>
+If under this under this circumstance test does not fail it may means that other test interfering with it. <br/>
